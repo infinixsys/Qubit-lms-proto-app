@@ -22,7 +22,7 @@ npm ci
 npm run dev
 ```
 
-The app uses port **5174**; the control panel uses **5173**; the API uses **4000**. Select **Explore the learner demo** or register a synthetic account. The development learner is `learner@qubit.demo` / `QubitDemo2026!`. The desktop app has sidebar navigation; mobile has bottom tabs and a menu for additional modules.
+The app uses port **7312**; the control panel uses **7311**; the API uses **7310**. Select **Explore the learner demo** or register a synthetic account. The development learner is `learner@qubit.demo` / `QubitDemo2026!`. The desktop app has sidebar navigation; mobile has bottom tabs and a menu for additional modules.
 
 ## Learning experience
 
