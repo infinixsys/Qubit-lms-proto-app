@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Qubit</string>
-    <string name="title_activity_main">Qubit</string>
+    <string name="app_name">Qubit Coaching</string>
+    <string name="title_activity_main">Qubit Coaching</string>
     <string name="package_name">com.qubitsolutions.lms</string>
     <string name="custom_url_scheme">com.qubitsolutions.lms</string>
 </resources>

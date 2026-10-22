@@ -1,3 +1,10 @@
+import {
+  isNative,
+  nativeRequest,
+  storeNativeSession,
+  clearNativeSession,
+} from "./native";
+export { absoluteApiPath } from "./native";
 import React, {
   createContext,
   useContext,
@@ -21,11 +28,13 @@ import {
   BookmarkCheck,
   Brain,
   BriefcaseBusiness,
+  Building2,
   CalendarDays,
   CalendarPlus,
   ChartNoAxesCombined,
   Check,
   CheckCheck,
+  ChevronLeft,
   ChevronRight,
   Circle,
   CircleAlert,
@@ -36,12 +45,14 @@ import {
   Clock3,
   CloudUpload,
   Compass,
+  CreditCard,
   Download,
   FileText,
   Fingerprint,
   Flag,
   Flame,
   Globe2,
+  GraduationCap,
   Grid2X2,
   HardDriveDownload,
   Headphones,
@@ -67,13 +78,17 @@ import {
   Orbit,
   Paperclip,
   Pause,
+  Pencil,
+  Play,
   Plus,
   Printer,
   Quote,
+  RefreshCw,
   RotateCcw,
   Route,
   Search,
   Send,
+  Settings2,
   Shapes,
   Share2,
   ShieldCheck,
@@ -83,10 +98,12 @@ import {
   Sun,
   Target,
   Trash2,
+  Upload,
   UserRoundX,
   Video,
   Volume2,
   WifiOff,
+  X,
 } from "lucide-react";
 const iconMap: Record<string, any> = {
   AlignLeft,
@@ -104,11 +121,13 @@ const iconMap: Record<string, any> = {
   BookmarkCheck,
   Brain,
   BriefcaseBusiness,
+  Building2,
   CalendarDays,
   CalendarPlus,
   ChartNoAxesCombined,
   Check,
   CheckCheck,
+  ChevronLeft,
   ChevronRight,
   Circle,
   CircleAlert,
@@ -119,12 +138,14 @@ const iconMap: Record<string, any> = {
   Clock3,
   CloudUpload,
   Compass,
+  CreditCard,
   Download,
   FileText,
   Fingerprint,
   Flag,
   Flame,
   Globe2,
+  GraduationCap,
   Grid2X2,
   HardDriveDownload,
   Headphones,
@@ -150,13 +171,17 @@ const iconMap: Record<string, any> = {
   Orbit,
   Paperclip,
   Pause,
+  Pencil,
+  Play,
   Plus,
   Printer,
   Quote,
+  RefreshCw,
   RotateCcw,
   Route,
   Search,
   Send,
+  Settings2,
   Shapes,
   Share2,
   ShieldCheck,
@@ -166,10 +191,12 @@ const iconMap: Record<string, any> = {
   Sun,
   Target,
   Trash2,
+  Upload,
   UserRoundX,
   Video,
   Volume2,
   WifiOff,
+  X,
 };
 export type Row = Record<string, any>;
 const SURFACE = "learner";
@@ -193,7 +220,7 @@ export async function api(path: string, options: RequestInit = {}) {
     if (cached) return JSON.parse(cached);
     throw new Error("You’re offline. Download lessons before disconnecting.");
   }
-  const r = await fetch(API_BASE + "/api/v1" + path, {
+  const request: RequestInit = {
     ...options,
     credentials: "include",
     headers: {
@@ -201,10 +228,18 @@ export async function api(path: string, options: RequestInit = {}) {
       "X-Qubit-Surface": SURFACE,
       ...options.headers,
     },
-  });
+  };
+  const r = isNative
+    ? await nativeRequest(path, request)
+    : await fetch(API_BASE + "/api/v1" + path, request);
   const data = await r.json();
+  if (path === "/auth/login" && r.ok) await storeNativeSession(data);
+  if (path === "/auth/logout") await clearNativeSession();
   if (!r.ok)
-    throw new Error(data.error?.message || "Unable to complete that request.");
+    throw Object.assign(
+      new Error(data.error?.message || "Unable to complete that request."),
+      { status: r.status },
+    );
   if (path === "/me" || path === "/auth/login") {
     localStorage.setItem("qubit-user", data.user.id);
     localStorage.setItem("qubit-profile", JSON.stringify(data.user));
@@ -278,7 +313,9 @@ export function Badge({ children }: { children: React.ReactNode }) {
           s,
         )
           ? "good"
-          : /Failed|Suspended|Revoked|Rejected|Deactivated/.test(s)
+          : /Failed|Suspended|Revoked|Rejected|Deactivated|Blocked|Inactive/.test(
+                s,
+              )
             ? "bad"
             : /Review|Pending|Submitted|Investigating|Queued|Invited/.test(s)
               ? "warn"
@@ -483,7 +520,7 @@ export type Field = {
   name: string;
   label: string;
   type?: string;
-  options?: string[];
+  options?: (string | { label: string; value: string })[];
   required?: boolean;
   placeholder?: string;
   help?: string;
@@ -551,7 +588,12 @@ export function Form({
               >
                 <option value="">Select an option</option>
                 {f.options?.map((o) => (
-                  <option key={o}>{o}</option>
+                  <option
+                    key={typeof o === "string" ? o : o.value}
+                    value={typeof o === "string" ? o : o.value}
+                  >
+                    {typeof o === "string" ? o : o.label}
+                  </option>
                 ))}
               </select>
             ) : f.type === "checkbox" ? (

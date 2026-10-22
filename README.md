@@ -1,70 +1,21 @@
-# Qubit · Learner app
+# Qubit Coaching · Android learner app
 
-For your own computer, follow [Local setup](LOCAL_SETUP.md).
+A separate React/TypeScript + Capacitor Android learner app connected to the coaching-owner API in [Qubit-lms-proto-cp](https://github.com/infinixsys/Qubit-lms-proto-cp). [LOCAL_SETUP.md](LOCAL_SETUP.md) includes Windows setup, APK installation, Wi-Fi connection and build instructions.
 
-A separate responsive learner application and **Capacitor hybrid Android/iOS project**, connected to the shared API in `infinixsys/Qubit-lms-proto-cp`.
-
-## Start
-
-Requires Node 24.19.0 or compatible Node 24 and npm. First start the API in the control-panel checkout:
-
-```bash
-cd /workspace/Qubit-lms-proto-cp
+```sh
 npm ci
-npm run start
+npm run dev          # browser preview on 7312; start the CP API first
+npm run android:apk  # local Android APK; requires JDK 21 and Android SDK
 ```
 
-Then start the separate learner app:
+APK output: `android/app/build/outputs/apk/debug/app-debug.apk`. The APK embeds the built app and lets learners configure their coaching server address at sign-in. Native sessions use Android Keystore-protected encrypted storage.
 
-```bash
-cd /workspace/Qubit-lms-proto-app
-npm ci
-npm run dev
-```
+Home, Courses, Practice, Updates and You form the main navigation. Learners can register, request INR packages, submit payment references/receipts, see approval and activation separately, learn through private videos/images/PDFs/Word readings, save notes, complete lessons and take course-specific practice tests. Downloads, assignments, live classes, discussions, certificates, support and a reference-only study companion are available through focused secondary screens.
 
-The app uses port **7312**; the control panel uses **7311**; the API uses **7310**. Select **Explore the learner demo** or register a synthetic account. The development learner is `learner@qubit.demo` / `QubitDemo2026!`. The desktop app has sidebar navigation; mobile has bottom tabs and a menu for additional modules.
+Learning requires an active account and an approved subscription within its access dates. Owner blocking, cancellations and expiry are enforced by the shared API. Eligible reading text can be downloaded for at most 24 hours and no later than package expiry; offline media playback is not implemented.
 
-## Learning experience
+The visual system uses bundled free Inter, Plus Jakarta Sans and Devanagari fonts, navy/teal surfaces and realistic generated Indian course imagery. No external font/image service is needed.
 
-Personalised home, course search and filters, saved courses, enrolment, Course Atlas/list, reading and device read-aloud, transcript, focus mode, bookmarks, personal notes, offline reading downloads, server-timed assessments, submissions, graded feedback, progress and Mastery Lens, reference-based companion, inbox, community, live-session calendar export, support, earned certificates, account sessions, appearance/accessibility preferences, goals and privacy requests.
+`npm run build` validates types and produces the offline browser shell. `npm run format:check` checks style. Cross-product browser and backend tests live in the CP repository. Android debug APK compilation is configured in CI.
 
-The visual system uses bundled DM Sans/Manrope fonts, original SVG course illustrations, a calm sage palette, dark appearance, reduced-motion support and responsive navigation. No external image/font service is required.
-
-## Hybrid Android and iOS
-
-Both `android/` and `ios/` are generated native projects. They embed the **built** web application, not the Vite development server.
-
-```bash
-npm run native:sync  # typecheck, web build, offline-shell generation, Capacitor sync
-npm run android      # open Android Studio on a suitable development machine
-npm run ios          # open Xcode on macOS
-```
-
-For a real device, supply `VITE_API_URL` as an HTTPS backend origin at **build time**, configure that origin's CORS and session-cookie policy, then rebuild and sync. The default empty value is intentionally for the browser's same-origin development proxy; an unconfigured native build cannot reach the local API. Do not put API credentials in frontend variables.
-
-Native prerequisites:
-
-- Android Studio, appropriate Android SDK, Java 21, signing configuration, and an emulator or device.
-- macOS, Xcode, CocoaPods, Apple signing/provisioning and an iOS simulator or device.
-- A reachable HTTPS API with a tested native authentication strategy.
-
-**Validated here:** web build, TypeScript, browser flows, Android/iOS project generation and asset/plugin sync. **Not validated:** native compilation, native cookie/session persistence, secure keychain/keystore storage, biometrics, device background behaviour, app-store signing, provisioning, and real-device accessibility. Linux cannot build a signed iOS application.
-
-## Offline behaviour
-
-Production web builds include a versioned service worker precaching the application shell. Reading lessons are downloaded explicitly and expire after **24 hours**. Online access is checked by the API. Supported progress and notes queue on this device and sync in order after reconnection; completion is monotonic and event keys prevent duplicates. Failed sync records remain visible for retry or explicit discard. Quizzes and final assignment submissions require a connection.
-
-Local prototype downloads and personal caches are **not encrypted**. Signing out clears them (with a warning for unsynced work). Immediate remote revocation while disconnected, media DRM, resumable streaming downloads and high-stakes offline assessments are not implemented. Do not put sensitive content on shared devices.
-
-## Checks
-
-```bash
-npm run typecheck
-npm run build
-npm run native:sync
-npm run format:check
-# Full cross-product browser suite lives in the control-panel repository:
-npm run test:e2e --prefix ../Qubit-lms-proto-cp
-```
-
-Full requirements coverage, architecture, review instructions and production gaps are documented in the control-panel repository and summarised in [docs/FEATURE_MATRIX.md](docs/FEATURE_MATRIX.md).
+The local APK permits HTTP development servers. Use HTTPS and private release signing for deployment. iOS project scaffolding remains, but signed iOS builds and native-session integration require additional work on macOS. Manual payment review is implemented; automated payment processing, email/SMS/push delivery and production AI are not connected.
