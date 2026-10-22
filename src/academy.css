@@ -645,3 +645,7 @@ input[type="checkbox"] {
     padding: 20px;
   }
 }
+
+.mobile-page-heading > p {
+  color: #5c6d84;
+}

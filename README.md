@@ -1,6 +1,6 @@
 # Refix India Institute · Android learner app
 
-[Download the Android test APK](https://github.com/infinixsys/Qubit-lms-proto-app/releases/download/android-prototype-refix-2026-10-22/Refix-India-Institute-debug.apk) · [Release notes and checksum](https://github.com/infinixsys/Qubit-lms-proto-app/releases/tag/android-prototype-refix-2026-10-22)
+[Download the Android test APK](https://github.com/infinixsys/Qubit-lms-proto-app/releases/download/android-prototype-refix-2026-10-22-r2/Refix-India-Institute-debug.apk) · [Release notes and checksum](https://github.com/infinixsys/Qubit-lms-proto-app/releases/tag/android-prototype-refix-2026-10-22-r2)
 
 A hardware-repair training institute app built with React/TypeScript + Capacitor Android learner app connected to the institute-owner API in [Qubit-lms-proto-cp](https://github.com/infinixsys/Qubit-lms-proto-cp). [LOCAL_SETUP.md](LOCAL_SETUP.md) includes Windows setup, APK installation, Wi-Fi connection and build instructions.
 
