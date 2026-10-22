@@ -1728,10 +1728,10 @@ function Quiz() {
           <h3>{c.title}</h3>
           <div className="quiz-facts">
             {[
-              ["CircleHelp", "5", "questions"],
-              ["Clock3", "15", "minutes"],
-              ["Target", "80%", "pass mark"],
-              ["RotateCcw", "3", "attempts"],
+              ["CircleHelp", String(c.quiz?.count ?? 5), "questions"],
+              ["Clock3", String(c.quiz?.timeMinutes ?? 15), "minutes"],
+              ["Target", String(c.quiz?.passMark ?? 80) + "%", "pass mark"],
+              ["RotateCcw", String(c.quiz?.maxAttempts ?? 3), "attempts"],
             ].map(([icon, n, label]) => (
               <div key={label}>
                 <Icon name={icon} size={20} />
@@ -1743,8 +1743,8 @@ function Quiz() {
           <div className="notice">
             <Icon name="Info" />
             Your answers are saved while online. The timer begins when you
-            start. Grading happens on the server; answer explanations appear
-            after submission.
+            start. Grading happens on the server. Answer feedback follows your
+            institute’s assessment policy.
           </div>
           <button
             className="btn primary"
@@ -1790,6 +1790,12 @@ function Quiz() {
             <small>%</small>
           </strong>
           <Badge>{result.passed ? "Passed" : "Keep practising"}</Badge>
+          {!result.review?.length && (
+            <p className="notice">
+              Answer explanations are withheld by your institute’s assessment
+              policy.
+            </p>
+          )}
           <div className="result-review">
             {result.review?.map((r: Row, i: number) => (
               <div key={r.id}>

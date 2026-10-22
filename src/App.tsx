@@ -1239,7 +1239,7 @@ function Practice() {
         <Icon name="Brain" size={42} />
         <div>
           <h2>Progress over perfection.</h2>
-          <p>Topic practice · 15 minutes · 3 attempts</p>
+          <p>Course-specific practice · institute assessment rules</p>
         </div>
       </div>
       <SectionTitle title="Course practice" />

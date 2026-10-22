@@ -1,6 +1,6 @@
 # Refix India Institute · Android learner app
 
-[Download the Android test APK](https://github.com/infinixsys/Qubit-lms-proto-app/releases/download/android-prototype-refix-2026-10-22-r2/Refix-India-Institute-debug.apk) · [Release notes and checksum](https://github.com/infinixsys/Qubit-lms-proto-app/releases/tag/android-prototype-refix-2026-10-22-r2)
+[Download the Android test APK](https://github.com/infinixsys/Qubit-lms-proto-app/releases/download/android-prototype-control-centre-2026-10-22/Refix-India-Institute-debug.apk) · [Release notes and checksum](https://github.com/infinixsys/Qubit-lms-proto-app/releases/tag/android-prototype-control-centre-2026-10-22)
 
 A hardware-repair training institute app built with React/TypeScript + Capacitor Android learner app connected to the institute-owner API in [Qubit-lms-proto-cp](https://github.com/infinixsys/Qubit-lms-proto-cp). [LOCAL_SETUP.md](LOCAL_SETUP.md) includes Windows setup, APK installation, Wi-Fi connection and build instructions.
 
@@ -23,3 +23,5 @@ The visual system uses bundled free Inter, Plus Jakarta Sans and Devanagari font
 The local APK permits HTTP development servers. Use HTTPS and private release signing for deployment. iOS project scaffolding remains, but signed iOS builds and native-session integration require additional work on macOS. Manual payment review is implemented; automated payment processing, email/SMS/push delivery and production AI are not connected.
 
 The repair catalog includes laptop diagnostics, mobile board inspection, precision soldering, desktop troubleshooting, electronics and workshop business. **Repair bench** lets learners submit written practical observations, receive trainer feedback and see assigned batch schedules. Course imagery is synthetic; the two original 36-second visual lessons are clearly labelled demonstration content. Existing API paths remain compatible while all product copy uses “institute”.
+
+Assessment information now follows the published course's quiz policy. The shared API captures each attempt's rules and controls timers, attempts, retry waiting periods, availability, grading and answer reveal. See the CP repository's [original-document upgrade mapping](https://github.com/infinixsys/Qubit-lms-proto-cp/blob/main/docs/CONTROL_PANEL_UPGRADE.md).

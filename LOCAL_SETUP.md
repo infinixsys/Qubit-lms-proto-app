@@ -64,7 +64,7 @@ These are public prototype credentials and synthetic records. Register a new lea
 
 ## Install the Android learner APK
 
-Download [Refix-India-Institute-debug.apk](https://github.com/infinixsys/Qubit-lms-proto-app/releases/download/android-prototype-refix-2026-10-22-r2/Refix-India-Institute-debug.apk) from the [GitHub release](https://github.com/infinixsys/Qubit-lms-proto-app/releases/tag/android-prototype-refix-2026-10-22-r2), or build one as below. Transfer it to your Android phone and allow installation from the app used to open the APK. The APK has Android API 23 as its install minimum and targets API 35. Use an up-to-date Android System WebView; testing on your target phone is still required. The local test APK permits HTTP to your development computer; it is not a Play Store release.
+Download [Refix-India-Institute-debug.apk](https://github.com/infinixsys/Qubit-lms-proto-app/releases/download/android-prototype-control-centre-2026-10-22/Refix-India-Institute-debug.apk) from the [GitHub release](https://github.com/infinixsys/Qubit-lms-proto-app/releases/tag/android-prototype-control-centre-2026-10-22), or build one as below. Transfer it to your Android phone and allow installation from the app used to open the APK. The APK has Android API 23 as its install minimum and targets API 35. Use an up-to-date Android System WebView; testing on your target phone is still required. The local test APK permits HTTP to your development computer; it is not a Play Store release.
 
 1. Start `npm run dev:all` on your computer.
 2. Connect your phone and computer to the same Wi-Fi.
@@ -135,3 +135,7 @@ In a course, **Duplicate**, **Archive course / Restore draft**, and **Arrange cu
 Learners open **Repair bench** on Home or **Practical lab & batches** in You. Submit written bench observations for an enrolled, approved course. The trainer reviews the work as Changes requested or Competent, with feedback and a score. This is a written-observation workflow; photo/video evidence upload, attendance tracking and a professional-certification process are not included.
 
 Client website inspection was blocked by this cloud environment's network policy. The Refix institute wordmark and navy/blue/copper design are a proposed visual direction, not a verified reproduction of refixindia.com.
+
+## Control-panel assessment settings
+
+Keep both repositories updated. The owner can publish versioned assessment policies from **Assessments** in the control panel. The learner app displays the actual question count, timer, pass mark and attempt limit, and shows when feedback is withheld by institute policy. The API enforces these settings even for an older app. Current source mapping: https://github.com/infinixsys/Qubit-lms-proto-cp/blob/main/docs/CONTROL_PANEL_UPGRADE.md
