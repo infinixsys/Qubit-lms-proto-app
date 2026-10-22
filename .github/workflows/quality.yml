@@ -1,5 +1,7 @@
 name: Learner web and hybrid asset quality
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -33,3 +35,45 @@ jobs:
           name: Qubit-Coaching-debug
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+  publish-apk:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/android-prototype-')
+    needs: [validate, android-apk]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: Qubit-Coaching-debug
+          path: release
+      - name: Publish a downloadable Android prototype
+        working-directory: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          APK_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mv app-debug.apk Qubit-Coaching-debug.apk
+          sha256sum Qubit-Coaching-debug.apk > Qubit-Coaching-debug.apk.sha256
+          cat > release-notes.md <<'NOTES'
+          Install **Qubit-Coaching-debug.apk** from the assets below on your Android phone.
+
+          This is a debug build for local testing. Start the API from the separate Qubit-lms-proto-cp repository, connect your phone and computer to the same Wi-Fi, and enter http://YOUR-PC-IP:7310 in the app. Android Emulator uses http://10.0.2.2:7310.
+
+          Demo learner: learner@qubit.demo / QubitDemo2026!
+
+          Full local setup: https://github.com/infinixsys/Qubit-lms-proto-app/blob/main/LOCAL_SETUP.md
+
+          Payments use manual owner verification. This is not a signed Play Store release. A recent Android System WebView is required. If you installed a debug APK signed by another machine, Android may require uninstalling that copy first; server-side learning data stays in the coaching API.
+          NOTES
+          gh release create "$APK_TAG" \
+            Qubit-Coaching-debug.apk \
+            Qubit-Coaching-debug.apk.sha256 \
+            --repo "$GH_REPO" \
+            --verify-tag \
+            --title "Qubit Coaching · Android prototype" \
+            --notes-file release-notes.md \
+            --prerelease
