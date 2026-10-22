@@ -48,7 +48,7 @@ export const nativeHeaders = (): Record<string, string> =>
       }
     : {};
 export async function nativeRequest(path: string, options: RequestInit) {
-  if (!backend) throw new Error("Connect to your coaching server first.");
+  if (!backend) throw new Error("Connect to your institute server first.");
   const response = await CapacitorHttp.request({
     url: backend + "/api/v1" + path,
     method: options.method || "GET",

@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 const config: CapacitorConfig = {
   appId: "com.qubitsolutions.lms",
-  appName: "Qubit Coaching",
+  appName: "Refix India Institute",
   webDir: "dist",
   server: { androidScheme: "https" },
   ios: { contentInset: "automatic" },

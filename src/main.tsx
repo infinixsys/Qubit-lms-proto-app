@@ -14,6 +14,7 @@ import App from "./App";
 import "./base.css";
 import "./styles.css";
 import "./coaching.css";
+import "./academy.css";
 import { initializeNative, isNative } from "./native";
 await initializeNative();
 ReactDOM.createRoot(document.getElementById("root")!).render(

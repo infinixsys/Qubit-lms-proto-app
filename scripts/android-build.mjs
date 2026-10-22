@@ -26,6 +26,6 @@ run(
 console.log("APK ready: android/app/build/outputs/apk/debug/app-debug.apk");
 console.log(
   local
-    ? "Local testing build: HTTP coaching servers are allowed."
+    ? "Local testing build: HTTP institute servers are allowed."
     : "HTTPS coaching server required.",
 );

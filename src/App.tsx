@@ -1,3 +1,4 @@
+import { PracticalLab } from "./academy";
 import { App as CapacitorApp } from "@capacitor/app";
 import { useEffect, useState } from "react";
 import {
@@ -96,13 +97,13 @@ function Connect({ done }: { done: () => void }) {
       <span className="auth-icon">
         <Icon name="Building2" size={32} />
       </span>
-      <h1>Connect to your coaching</h1>
-      <p>Enter the server address provided by your coaching owner.</p>
+      <h1>Connect to your institute</h1>
+      <p>Enter the server address provided by your institute owner.</p>
       <Form
         fields={[
           {
             name: "address",
-            label: "Coaching server address",
+            label: "Institute server address",
             required: true,
             placeholder: "http://192.168.1.4:7310",
             help: "For local testing, connect your phone and computer to the same Wi-Fi. Use the computer’s LAN IP and port 7310.",
@@ -128,29 +129,36 @@ function Auth({ done }: { done: (d: Row) => void }) {
   return (
     <div className="learner-auth">
       <div className="auth-photo">
-        <img src="/images/physics.png" alt="Indian physics educator" />
+        <img
+          src="/images/repair-laptop.jpg"
+          alt="Instructor at an Indian repair training bench"
+        />
         <div>
           <Brand />
-          <span className="eyebrow">YOUR AMBITION. A CLEAR PATH.</span>
+          <span className="eyebrow">
+            LEARN THE SKILL. BUILD THE CONFIDENCE.
+          </span>
           <h1>
-            A little progress.
+            Learn to diagnose.
             <br />
-            Every single day.
+            Learn to repair.
           </h1>
-          <p>Learn with your coaching. Grow at your pace.</p>
+          <p>Learn at the Refix repair bench. Grow at your pace.</p>
         </div>
       </div>
       <section>
         <div className="mobile-auth-brand">
           <Brand />
-          <span>COACHING, CONNECTED</span>
+          <span>REPAIR SKILLS, CONNECTED</span>
         </div>
         <h2>
-          {signup ? "Your next chapter starts here" : "Good to see you again"}
+          {signup
+            ? "Your technician journey starts here"
+            : "Good to see you again"}
         </h2>
         <p>
           {signup
-            ? "Join your coaching centre and choose your learning package."
+            ? "Join your training institute and choose your learning package."
             : "Sign in. Pick up where your ambition left off."}
         </p>
         <Form
@@ -185,7 +193,7 @@ function Auth({ done }: { done: (d: Row) => void }) {
                   {
                     name: "consent",
                     label:
-                      "I agree to the coaching terms and use of my details for learning.",
+                      "I agree to the institute terms and use of my details for learning.",
                     type: "checkbox",
                   },
                 ]
@@ -230,7 +238,7 @@ function Auth({ done }: { done: (d: Row) => void }) {
             onClick={() => setConnected(false)}
           >
             <Icon name="Settings2" size={15} />
-            Change coaching server
+            Change institute server
           </button>
         )}
       </section>
@@ -320,7 +328,7 @@ export default function App() {
             <Brand />
           </Link>
           <span className="learner-coaching-name">
-            {coaching.data?.name || "Qubit Coaching"}
+            {coaching.data?.name || "Refix India Institute"}
           </span>
           <Link to="/updates" aria-label="Updates" className="icon-btn">
             <Icon name="Bell" size={21} />
@@ -336,6 +344,7 @@ export default function App() {
           <Route path="/courses" element={<Catalog />} />
           <Route path="/course/:id" element={<Course />} />
           <Route path="/lesson/:id" element={<Lesson />} />
+          <Route path="/bench" element={<PracticalLab />} />
           <Route path="/tests" element={<Practice />} />
           <Route path="/quiz/:id" element={<Quiz />} />
           <Route path="/plans" element={<Plans />} />
@@ -393,8 +402,8 @@ function AccessNotice({ me }: { me: Row }) {
         </strong>
         <p>
           {me.activation !== "Active"
-            ? "Your coaching owner will review your package and activate access."
-            : "Choose a package. Your coaching verifies payment and approves access."}
+            ? "Your institute owner will review your package and activate access."
+            : "Choose a package. Your institute verifies payment and approves access."}
         </p>
       </div>
       <Icon name="ChevronRight" size={17} />
@@ -454,41 +463,41 @@ function Home({ user }: { user: Row }) {
   return (
     <>
       <div className="home-greeting">
-        <span className="eyebrow">A FRESH CHANCE TO MOVE FORWARD</span>
+        <span className="eyebrow">REFIX INDIA / YOUR TECHNICIAN JOURNEY</span>
         <h1>
           Hello, {user.name.split(" ")[0]}{" "}
           <span className="greeting-dot">✦</span>
         </h1>
-        <p>What will you discover today?</p>
+        <p>What will you learn to repair today?</p>
       </div>
       {me.data && <AccessNotice me={me.data} />}
       <section className="learner-hero">
         <div>
           <span className="hero-chip">
             <span />
-            YOUR NEXT CHAPTER
+            FROM LEARNING TO THE WORKBENCH
           </span>
           <h2>
-            Big dreams.
+            Real skills.
             <br />
-            Small, steady steps.
+            Confident repairs.
           </h2>
           <p>
-            Build your concepts.
+            Learn mobile & laptop repair.
             <br />
-            Find your confidence.
+            One practical step at a time.
           </p>
           <Link to="/courses" className="btn">
             Explore courses <Icon name="ArrowRight" size={16} />
           </Link>
         </div>
         <img
-          src="/images/physics.png"
-          alt="Learn physics with expert Indian faculty"
+          src="/images/repair-laptop.jpg"
+          alt="Indian repair instructor and technician at a laptop workbench"
         />
         <span className="hero-photo-label">
           <Icon name="GraduationCap" size={16} />
-          Learn with your coaching
+          Learn at the Refix repair bench
         </span>
       </section>
       <div className="quick-actions">
@@ -504,11 +513,11 @@ function Home({ user }: { user: Row }) {
           </span>
           <span>Practice</span>
         </Link>
-        <Link to="/downloads">
+        <Link to="/bench">
           <span className="quick-icon lavender">
-            <Icon name="Download" />
+            <Icon name="Settings2" />
           </span>
-          <span>Downloads</span>
+          <span>Repair bench</span>
         </Link>
         <Link to="/subscription">
           <span className="quick-icon teal">
@@ -546,8 +555,8 @@ function Home({ user }: { user: Row }) {
         </>
       )}
       <SectionTitle
-        title="Your ambition, your path"
-        text="Find a course that fits your goal"
+        title="Find your specialisation"
+        text="Mobile, laptop and computer hardware training"
         to="/courses"
       />
       {d.error ? (
@@ -564,10 +573,10 @@ function Home({ user }: { user: Row }) {
       <div className="study-tip">
         <span>✦</span>
         <div>
-          <strong>A little advice for today</strong>
+          <strong>Good repairs start with good observations</strong>
           <p>
-            Understand one concept well. Then practise it without looking at the
-            answer.
+            Record the symptom. Isolate power safely. Inspect before testing,
+            and review your observations with your trainer.
           </p>
         </div>
       </div>
@@ -589,20 +598,26 @@ function Catalog() {
     <>
       <div className="mobile-page-heading">
         <span className="eyebrow">LEARN WITH PURPOSE</span>
-        <h1>Find your next step</h1>
-        <p>Your goals deserve a clear path.</p>
+        <h1>Build your repair skills</h1>
+        <p>Practical training for the next generation of technicians.</p>
       </div>
       <label className="search-field mobile-search">
         <Icon name="Search" size={19} />
         <input
           aria-label="Search courses"
-          placeholder="Search courses, subjects…"
+          placeholder="Search repair courses, skills…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
       </label>
       <div className="filter-tabs mobile-filters">
-        {["All", "My courses", "JEE", "NEET", "UPSC", "CBSE"].map((f) => (
+        {[
+          "All",
+          "My courses",
+          ...Array.from(
+            new Set<string>((d.data || []).map((c: Row) => c.category)),
+          ),
+        ].map((f) => (
           <button
             key={f}
             className={f === filter ? "selected" : ""}
@@ -684,7 +699,7 @@ function Course() {
           </span>
           <span>
             <Icon name="ShieldCheck" size={15} />
-            Coaching approved
+            Institute approved
           </span>
         </div>
         {access ? (
@@ -892,7 +907,7 @@ function Lesson() {
               ? "Back to course"
               : "Complete lesson"}
         </button>
-        <small>Your progress syncs with your coaching dashboard.</small>
+        <small>Your progress syncs with your institute dashboard.</small>
       </div>
     </div>
   );
@@ -911,7 +926,7 @@ function Plans() {
       <div className="mobile-page-heading">
         <span className="eyebrow">INVEST IN YOUR NEXT STEP</span>
         <h1>A plan for your ambition</h1>
-        <p>Choose your course. Learn with your coaching.</p>
+        <p>Choose your course. Learn at the Refix repair bench.</p>
       </div>
       {d.error ? (
         <ErrorState error={d.error} />
@@ -972,7 +987,7 @@ function Plans() {
       <div className="how-access-works">
         <Icon name="ShieldCheck" />
         <p>
-          Choose a package → complete payment → your coaching verifies it →
+          Choose a package → complete payment → your institute verifies it →
           learning opens once your account is active.
         </p>
       </div>
@@ -1002,7 +1017,7 @@ function Plans() {
             }}
           >
             <div className="note-box">
-              <strong>Payment goes to your coaching centre.</strong>
+              <strong>Payment goes to your training institute.</strong>
               <p>{me.data?.settings.paymentInstructions}</p>
             </div>
             <label>
@@ -1018,7 +1033,8 @@ function Plans() {
             </label>
             <p className="subtle-note">
               This request does not collect a payment. Share your payment
-              reference on the next screen. Your coaching owner confirms access.
+              reference on the next screen. Your institute owner confirms
+              access.
             </p>
             {err && (
               <p role="alert" className="form-error">
@@ -1063,8 +1079,8 @@ function Subscription() {
           <strong>Account activation</strong>
           <p>
             {me.activation === "Active"
-              ? "Your coaching has activated your account."
-              : "Your coaching owner needs to activate your account."}
+              ? "Your institute has activated your account."
+              : "Your institute owner needs to activate your account."}
           </p>
         </div>
         <Badge>{me.activation}</Badge>
@@ -1098,7 +1114,9 @@ function Subscription() {
         <div className="no-plan">
           <Icon name="BookOpen" size={35} />
           <h2>Your next chapter is waiting</h2>
-          <p>Choose a package to start learning with your coaching centre.</p>
+          <p>
+            Choose a package to start learning with your training institute.
+          </p>
         </div>
       )}
       <Link className="btn primary full" to="/plans">
@@ -1137,7 +1155,7 @@ function Subscription() {
             {r.status === "Pending approval" && (
               <div className="pending-message">
                 <Icon name="Clock3" size={17} />
-                Your coaching is reviewing this payment.
+                Your institute is reviewing this payment.
               </div>
             )}
           </section>
@@ -1189,7 +1207,7 @@ function Subscription() {
                 name: "reference",
                 label: "UPI / bank reference or cash receipt number",
                 required: true,
-                help: "At least 6 characters. Your coaching will verify this before approval.",
+                help: "At least 6 characters. Your institute will verify this before approval.",
               },
             ]}
             label="Submit for verification"
@@ -1297,7 +1315,8 @@ function Profile({
           ["/downloads", "Offline readings", "Download"],
           ["/certificates", "Certificates", "Award"],
           ["/live", "Live classes", "Video"],
-          ["/support", "Help from my coaching", "LifeBuoy"],
+          ["/bench", "Practical lab & batches", "Settings2"],
+          ["/support", "Help from my institute", "LifeBuoy"],
           ["/assistant", "Study companion", "Sparkles"],
         ].map(([path, label, icon]) => (
           <Link to={path} key={path}>
@@ -1312,7 +1331,7 @@ function Profile({
       <div className="profile-footer">
         <Icon name="GraduationCap" size={24} />
         <strong>One step closer. Every day.</strong>
-        <p>Qubit Coaching · Made for your learning journey.</p>
+        <p>Refix India Institute · Made for your learning journey.</p>
         <button className="btn" onClick={logout}>
           <Icon name="LogOut" size={17} />
           Sign out

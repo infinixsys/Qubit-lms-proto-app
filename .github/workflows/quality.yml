@@ -11,7 +11,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      - run: npm ci
+      - run: npm ci --no-audit --no-fund
       - run: npm run format:check
       - run: npm run build
   android-apk:
@@ -34,11 +34,11 @@ jobs:
           test -x "$ANDROID_HOME/build-tools/34.0.0/aapt2"
           test -x "$ANDROID_HOME/build-tools/35.0.0/apksigner"
           javac -version
-      - run: npm ci
+      - run: npm ci --no-audit --no-fund
       - run: npm run android:apk
       - uses: actions/upload-artifact@v4
         with:
-          name: Qubit-Coaching-debug
+          name: Refix-India-Institute-debug
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
   publish-apk:
@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: Qubit-Coaching-debug
+          name: Refix-India-Institute-debug
           path: release
       - name: Publish a downloadable Android prototype
         working-directory: release
@@ -62,10 +62,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mv app-debug.apk Qubit-Coaching-debug.apk
-          sha256sum Qubit-Coaching-debug.apk > Qubit-Coaching-debug.apk.sha256
+          mv app-debug.apk Refix-India-Institute-debug.apk
+          sha256sum Refix-India-Institute-debug.apk > Refix-India-Institute-debug.apk.sha256
           cat > release-notes.md <<'NOTES'
-          Install **Qubit-Coaching-debug.apk** from the assets below on your Android phone.
+          Install **Refix-India-Institute-debug.apk** from the assets below on your Android phone.
 
           This is a debug build for local testing. Start the API from the separate Qubit-lms-proto-cp repository, connect your phone and computer to the same Wi-Fi, and enter http://YOUR-PC-IP:7310 in the app. Android Emulator uses http://10.0.2.2:7310.
 
@@ -73,13 +73,13 @@ jobs:
 
           Full local setup: https://github.com/infinixsys/Qubit-lms-proto-app/blob/main/LOCAL_SETUP.md
 
-          Payments use manual owner verification. This is not a signed Play Store release. A recent Android System WebView is required. If you installed a debug APK signed by another machine, Android may require uninstalling that copy first; server-side learning data stays in the coaching API.
+          Payments use manual owner verification. This is not a signed Play Store release. A recent Android System WebView is required. If you installed a debug APK signed by another machine, Android may require uninstalling that copy first; server-side learning data stays in the institute API.
           NOTES
           gh release create "$APK_TAG" \
-            Qubit-Coaching-debug.apk \
-            Qubit-Coaching-debug.apk.sha256 \
+            Refix-India-Institute-debug.apk \
+            Refix-India-Institute-debug.apk.sha256 \
             --repo "$GH_REPO" \
             --verify-tag \
-            --title "Qubit Coaching · Android prototype" \
+            --title "Refix India Institute · Android prototype" \
             --notes-file release-notes.md \
             --prerelease
