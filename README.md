@@ -1,5 +1,7 @@
 # Qubit Coaching · Android learner app
 
+[Download the Android test APK](https://github.com/infinixsys/Qubit-lms-proto-app/releases/download/android-prototype-2026-10-22-r2/Qubit-Coaching-debug.apk) · [Release notes and checksum](https://github.com/infinixsys/Qubit-lms-proto-app/releases/tag/android-prototype-2026-10-22-r2)
+
 A separate React/TypeScript + Capacitor Android learner app connected to the coaching-owner API in [Qubit-lms-proto-cp](https://github.com/infinixsys/Qubit-lms-proto-cp). [LOCAL_SETUP.md](LOCAL_SETUP.md) includes Windows setup, APK installation, Wi-Fi connection and build instructions.
 
 ```sh
